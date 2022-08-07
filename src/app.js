@@ -37,16 +37,47 @@ function weather(response) {
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let dateElement = document.querySelector("#date");
+  let iconElement = document.querySelector("#icon");
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   cityElement.innerHTML = response.data.name;
   descriptionElement.innerHTML = response.data.weather[0].description;
   humidityElement.innerHTML = response.data.main.humidity;
   windElement.innerHTML = Math.round(response.data.wind.speed);
-
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
 }
-let city = "Paris";
-let apiKey = "fe91551a3a288956be30ddf28e2a8974";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+function search(city) {
+  let apiKey = "fe91551a3a288956be30ddf28e2a8974";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(weather);
+}
 
-axios.get(apiUrl).then(weather);
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#search-text-input");
+  search(cityInputElement.value);
+}
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+search("Kyiv");
+
+function showPosition(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  let units = "metric";
+  let apiKey = "fe91551a3a288956be30ddf28e2a8974";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(weather);
+}
+
+function getPosition(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(showPosition);
+}
+
+let button = document.querySelector("#currentButton");
+button.addEventListener("click", getPosition);
