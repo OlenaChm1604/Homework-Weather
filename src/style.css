@@ -28,7 +28,9 @@ li {
 li:first-letter {
   text-transform: capitalize;
 }
-
+a:link {
+  text-decoration: none;
+}
 .overview {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -49,16 +51,22 @@ li:first-letter {
   height: 66px;
   width: 66px;
 }
-
+.weather-temperature .units {
+  position: relative;
+  font-size: 18px;
+  top: -33px;
+}
 .weather-temperature strong {
   color: rgb(14, 13, 13);
   font-size: 60px;
   line-height: 1;
   font-weight: 40;
 }
+.weather-temperature .active {
+  color: rgb(14, 13, 13);
+  cursor: default;
+}
 
-.weather-temperature .units {
-  position: relative;
-  font-size: 18px;
-  top: -33px;
+.weather-temperature .active:hover {
+  text-decoration: none;
 }
