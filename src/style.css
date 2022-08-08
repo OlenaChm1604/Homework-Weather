@@ -70,3 +70,8 @@ a:link {
 .weather-temperature .active:hover {
   text-decoration: none;
 }
+.weather-forecast {
+  margin-top: 18px;
+  text-align: center;
+  color: #000;
+}
